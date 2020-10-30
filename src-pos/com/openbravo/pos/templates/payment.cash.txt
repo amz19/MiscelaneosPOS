@@ -1,0 +1,12 @@
+payment.addButton("banknote.1000Pesos", 1000.00);
+payment.addButton("banknote.500Pesos", 500.00);
+payment.addButton("banknote.200Pesos", 200.00);
+payment.addButton("banknote.100Pesos", 100.00);
+payment.addButton("banknote.50Pesos", 50.00);
+payment.addButton("banknote.20Pesos", 20.00);
+payment.addButton("coin.10Pesos", 10.00);
+payment.addButton("coin.5Pesos", 5.00);
+payment.addButton("coin.2Pesos", 2.00);
+payment.addButton("coin.1Peso", 1.00);
+payment.addButton("coin.50Centavos", 0.50);
+payment.addButton("coin.20Centavos", 0.20);

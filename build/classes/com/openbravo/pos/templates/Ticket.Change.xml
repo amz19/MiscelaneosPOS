@@ -1,0 +1,15 @@
+import com.openbravo.pos.payment.PaymentInfo;
+import javax.swing.JOptionPane;
+
+boolean isCash = false;
+String change = "";
+PaymentInfo p = ticket.payments.getFirst();
+
+if ("cash".equals(p.getName())) {
+    isCash = true;
+    change = p.printChange();
+}
+if(isCash) {
+    javax.swing.JOptionPane.showMessageDialog(null, "El cambio es de:             " + change + "             pesos.", "Mensaje de MiscelaneosPOS.", JOptionPane.INFORMATION_MESSAGE);
+    return "Cancel";
+}

@@ -1,0 +1,142 @@
+escribelo!!!
+Printer.Ticket
+
+
+Calle Belgica #580
+C.P 78716
+colonia 22 de mayo
+Matehuala, san luis potosi 
+tel 488 205 94
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<output>
+    <opendrawer/>
+    <display>
+        <line>
+            <text align="left" length="10">Total</text>
+            <text align="right" length="10">${ticket.printTotal()}</text>
+        </line>
+        <line>
+           <text align="center" length="20">Gracias</text>
+        </line>
+    </display>
+    <ticket>
+        <!-- <image>Printer.Ticket.Logo</image>
+        <line></line> -->
+        <line>
+            <text align="center" length="40" bold="true">Abarrotes 22 de Mayo</text>
+        </line>
+        <line></line>
+	<line>
+            <text align="left" length="40">Calle Belgica #580</text>
+        </line>
+        <line>
+            <text align="left" length="40">Colonia 22 de Mayo. C. P. 78716</text>
+        </line>
+        <line>
+            <text align="left" length="40">Matehuala. San Luis Potosí, México</text>
+        </line>
+        <line>
+            <text align="left" length="40">Tel. 488 205 94.</text>
+        </line>
+        <line></line>
+        #if (${ticket.ticketType} == 0)
+        <line>
+            <text align="right" length="10">Folio:</text>
+            <text>  ${ticket.printId()}</text>
+        </line>
+        #end
+        #if (${ticket.ticketType} == 1)
+        <line>
+            <text align="right" length="10">Reembolso:</text>
+            <text>  ${ticket.printId()}</text>
+        </line>
+        #end
+        <line>
+            <text align="right" length="10">Fecha:</text>
+            <text>  ${ticket.printDate()}</text>
+        </line>
+         #if ($ticket.getCustomer())
+        <line>
+            <text align="right" length="10">Cliente:</text>
+            <text bold="true">  ${ticket.getCustomer().printName()}</text>
+        </line>      
+        <!-- <line>
+            <text align="left" length="15"></text>
+            <text>${ticket.getCustomer().printTaxid()}</text>
+        </line> -->
+        #end
+        #if ($place != "")
+        <line>
+            <text align="right" length="16">Mesa de regalos:</text>
+            <text>  ${place}</text>
+        </line>  
+        #end
+        <line></line>    
+        <line>
+            <text align ="center" length="19">Producto</text>
+            <text align ="center" length="9">Precio</text>
+            <text align ="center" length="4">Can</text>
+            <text align ="center" length="9">Costo</text>
+            <!--<text align ="right" length="5"></text>
+            <text align ="right" length="10">Value</text>-->
+        </line>      
+        <line>
+             <text>----------------------------------------</text>
+        </line>   
+        #set($discount = 0)
+        #set($refundMM = 0)
+        #foreach ($ticketline in $ticket.getLines())
+            <line>
+                #if ($ticketline.isProductCom()) 
+                    <text align ="left" length="19">  *${ticketline.printName()}</text>
+                #else
+                    <text align ="left" length="19">  ${ticketline.printName()}</text>
+                #end
+                #set($sinceros = ${ticketline.printPrice()})
+                #set($sinceros = $sinceros.substring(0, $sinceros.indexOf(".")))
+                <text align ="right" length="9">$sinceros</text>
+                <text align ="center" length="4"> x${ticketline.printMultiply()}</text>
+                #set($sinceros1 = ${ticketline.printSubValue()})
+                #set($sinceros1 = $sinceros1.substring(0, $sinceros1.indexOf(".")))
+                <text align ="right" length="8">$sinceros1</text>
+            </line> 
+            #if ($ticketline.productAttSetInstId)
+                <line>
+                    <text align ="left" length="42">${ticketline.productAttSetInstDesc}</text>
+                </line>
+            #end
+            #if ($ticketline.getMultiply() < 0.0)
+                #set($refundMM = $refundMM + 1)
+            #end            
+            #if ($ticketline.getPrice() < 0.0) 
+                #set($discount = $discount + 1) 
+            #end
+        #end
+        <line>
+             <text>----------------------------------------</text>
+        </line>
+        <line>  
+            <text>   Total de productos:  </text>
+            #if ($ticket.getArticlesCount() > 0)
+	    	#set($items = $ticket.getArticlesCount())
+		#set($items = $items + "")
+                #set($items = $items.substring(0, $items.indexOf(".")))
+	    #end
+            #if ($refundMM > 0)
+                #set($items = $refundMM)
+            #end
+            #if ($ticket.getArticlesCount() > 0 and $discount > 0)
+                #set($items = $ticket.getArticlesCount() - $discount)
+                #set($items = $items + "")
+                #set($items = $items.substring(0, $items.indexOf(".")))
+            #end
+            #if ($ticket.getArticlesCount() > 0 and $refundMM > 0)
+                #set($items = $ticket.getArticlesCount() + $refundMM)
+                #set($items = $items + "")
+                #set($items = $items.substring(0, $items.indexOf(".")))
+            #end
+            #if ($ticket.getArticlesCount() > 0 and $

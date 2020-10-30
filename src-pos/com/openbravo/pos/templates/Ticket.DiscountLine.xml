@@ -1,0 +1,50 @@
+import com.openbravo.format.Formats;
+import com.openbravo.pos.ticket.TicketLineInfo;
+import com.openbravo.pos.ticket.TicketProductInfo;
+index = sales.getSelectedIndex();
+if (index >= 0 ) {
+    line = ticket.getLine(index);
+    if (line.getPrice() > 0.0) {
+        discountrate = sales.getInputValue();
+        if (discountrate > 0.0 && discountrate <= 100.0) {
+            discountrate = discountrate / 100;
+            descuento = line.getValue() * discountrate;
+            if (descuento <= line.getValue()) {
+                if (descuento <= ticket.getTotal()) {
+                    product = ticket.getLine(index);
+                    String productName = product.getProductName();
+                    if (productName != "Compra 1 Mayor de 1.20 metros." && productName != "Devolución 1 Menor de 1.20 metros.") {
+                        sdiscount = Formats.PERCENT.formatValue(sales.getInputValue() / 100);                               
+                        ticket.insertLine(index + 1,
+                        new TicketLineInfo(
+                            "Descuentos.",                     
+                            "Desc " + sdiscount + " de " + Formats.CURRENCY.formatValue(line.getValue()),
+                            line.getProductTaxCategoryID(),
+                            1.0,
+                            -line.getValue () * discountrate,
+                            line.getTaxInfo()));
+                        sales.setSelectedIndex(index + 1);                    
+                    }
+                    else {
+                        java.awt.Toolkit.getDefaultToolkit().beep();
+                    }
+                }
+                else {
+                    java.awt.Toolkit.getDefaultToolkit().beep();                
+                }
+                }
+            else {
+                java.awt.Toolkit.getDefaultToolkit().beep();
+            }
+            }
+            else {
+                java.awt.Toolkit.getDefaultToolkit().beep();
+            }
+            }            
+        else {
+            java.awt.Toolkit.getDefaultToolkit().beep();
+        }
+        }
+    else {
+    java.awt.Toolkit.getDefaultToolkit().beep();
+}

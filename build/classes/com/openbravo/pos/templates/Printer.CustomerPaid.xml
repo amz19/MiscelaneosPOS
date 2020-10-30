@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<output>
+    <display>
+        <line>
+            <text align="left" length="10">Total pagado</text>
+            <text align="right" length="10">${ticket.printTotalPaid()}</text>
+        </line>
+        <line>
+            <text align="center" length="20">Gracias</text>
+        </line>
+    </display>
+    <ticket>
+        <!-- <image>Printer.Ticket.Logo</image>
+        <line></line> -->
+        <line>
+            <text align="center" length="40" bold="true">Abarrotes 22 de Mayo</text>
+        </line>
+        <line></line>
+	<!-- <line>
+            <text align="left" length="40">    Montes verdes #165-A Lomas 1°</text>
+        </line>
+        <line>
+            <text align="left" length="40">  C.P. 78210 Tel. 01(444)151-09-73</text>
+        </line>
+        <line>
+            <text align="left" length="40">       San Luis Potosí, México</text>
+        </line> -->
+        <line>
+            <text align="center" length="40" bold="true">Crédito</text>
+        </line>
+        <line></line>
+        <line>
+            <text align="right" length="12">Ticket:</text>
+            <text>  ${ticket.printId()}</text>
+        </line>   
+        <line>
+            <text align="right" length="12">Deuda:</text>
+            <text>  ${customer.printCurdate()}</text>
+        </line>
+        <line>
+            <text align="right" length="12">Pago:</text>
+            <text>  ${ticket.printDate()}</text>
+        </line>  
+         #if ($ticket.getCustomer())
+        <line>
+            <text align="right" length="12">Cliente:</text>
+            <text bold="true">  ${ticket.getCustomer().printName()}</text>
+        </line>      
+        <!-- <line>
+            <text align="right" length="8"></text>
+            <text>${ticket.getCustomer().printTaxid()}</text>
+        </line> -->  
+        #end       
+        <line></line>
+        #foreach ($paymentline in $ticket.payments)      
+        #if ($paymentline.name == "cash") 
+        <line>
+            <text align="left" length="9"> </text>
+            <text align="center" length="29">Efectivo</text>
+        </line>   
+        #end
+        #if ($paymentline.name == "magcard")
+        <line>
+            <text align="left" length="9"> </text>
+            <text align="center" length="29">Tarjeta</text>
+        </line>
+        <!-- <line>
+            <text align ="right" length="42">${paymentline.printTotal()}</text>
+        </line>    
+        <line>
+            <text align ="left" length="22">Numero:</text>
+            <text>${paymentline.printCardNumber()}</text>
+        </line>
+        <line>
+            <text align ="left" length="22">Fecha de expiración:</text>
+            <text>${paymentline.printExpirationDate()}</text>
+        </line>
+        <line>
+            <text align ="left" length="22">Operación:</text>
+            <text>${paymentline.printTransactionID()}</text>
+        </line>
+        <line>
+            <text align ="left" length="22">Autorización:</text>
+            <text>${paymentline.printAuthorization()}</text>
+        </line> -->
+        #end  
+        #if ($paymentline.name == "cheque")
+        <line>
+            <text align="left" length="9"> </text>
+            <text align="center" length="29">Cheque</text>
+        </line>    
+        <!-- <line>
+            <text align ="right" length="42">${paymentline.printTotal()}</text>
+        </line> -->    
+        #end
+         #if ($paymentline.name == "paperin")
+        <line>
+            <text align="left" length="9"> </text>
+            <text align="center" length="29">Vales</text>
+        </line>
+        <!-- <line>
+            <text align ="right" length="42">${paymentline.printTotal()}</text>
+        </line> -->    
+         #end
+        #end
+        <line></line> 
+        <line>
+             <text align="left" length="12"> </text>
+             <text align="right" length="7" bold="true">Pago:</text>
+	     <text align="right" length="19" bold="true">${ticket.printTotalPaid()} Pesos</text>
+        </line>  
+        <line>
+            <text align="left" length="12"> </text>
+            <text align="right" length="7" bold="true">Deuda:</text>
+	    <text align="right" length="19" bold="true">${customer.printCurDebt()} Pesos</text>
+        </line>  
+        <line></line>
+        <line>
+            <text align="center" length="40">Este crédito tiene una vigencia</text>
+        </line>
+        <line>
+            <text align="center" length="40">de 30 días naturales. Queda en</text>
+        </line>
+        <line>
+            <text align="center" length="40">el entendido de que en caso de</text>
+        </line>
+        <line>
+            <text align="center" length="40">no liquidarlo antes de su</text>
+        </line>
+        <line>
+            <text align="center" length="40">vencimiento, Abarrotes 22 de Mayo</text>
+        </line>
+        <line>
+            <text align="center" length="40">podrá disponer de este para su</text>
+        </line>
+        <line>
+            <text align="center" length="40">venta y en ningún caso habrá</text>
+        </line>
+        <line>
+            <text align="center" length="40">devolución de efectivo</text>
+        </line>
+        <line>
+            <text align="center" length="40">o de mercancía.</text>
+        </line>
+        <line></line>
+        <line></line>
+        <line></line>
+        <line>
+            <text>----------------------------------------</text>
+        </line>
+        <line>
+            <text align="center" length="40" bold="true">${ticket.getCustomer().printName()}</text>
+        </line>
+        <line>
+            <text align="center" length="40">Firma de conformidad</text>
+        </line>
+        <line></line>
+        <line>
+            <text align="right" length="10">Caja:</text>
+            <text>  ${host}</text>
+        </line>
+        <line>
+            <text align="right" length="10">Cajero:</text>
+            <text>  ${ticket.printUser()}</text>
+        </line>
+        <line></line>            
+        <line>
+            <text align="center" length="40">¡¡¡Gracias!!!</text>
+        </line>    
+    </ticket>
+    #foreach ($paymentline in $ticket.payments)      
+    #if ($paymentline.name == "cash")
+    <opendrawer/>
+    #end
+    #if ($paymentline.name == "cashrefund")
+    <opendrawer/>
+    #end  
+    #end
+</output>

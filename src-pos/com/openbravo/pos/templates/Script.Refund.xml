@@ -1,0 +1,18 @@
+import com.openbravo.pos.ticket.TicketLineInfo;
+
+ticket.insertLine(ticket.getLinesCount(),
+    new TicketLineInfo(
+        "B",
+        "Devolución 1 Menor de 1.20 metros.",
+        "000",
+	-1.0,
+	50,
+	taxes.get("000")));
+ticket.insertLine(ticket.getLinesCount(),
+    new TicketLineInfo(
+        "A",
+        "Compra 1 Mayor de 1.20 metros.",
+        "000",
+	1.0,
+	90,
+	taxes.get("000")));

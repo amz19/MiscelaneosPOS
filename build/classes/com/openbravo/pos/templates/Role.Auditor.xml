@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<permissions>
+    <class name="com.openbravo.pos.sales.JPanelTicketEdits"/>
+    <class name="/com/openbravo/reports/paymentsreport.bs"/>
+    <class name="/com/openbravo/reports/closedpos.bs"/>
+    <class name="sales.PrintTicket"/>
+    <class name="sales.Total"/>
+    <class name="payment.cash"/>
+    <class name="com.openbravo.pos.forms.MenuSalesManagement"/>
+    <class name="/com/openbravo/reports/usersales.bs"/>
+    <class name="/com/openbravo/reports/closedproducts.bs"/>
+    <class name="/com/openbravo/reports/chartsales.bs"/>  
+    <class name="/com/openbravo/reports/productsales.bs"/>
+    <class name="com.openbravo.pos.forms.MenuCustomers"/>
+    <class name="/com/openbravo/reports/customersb.bs"/>
+</permissions>

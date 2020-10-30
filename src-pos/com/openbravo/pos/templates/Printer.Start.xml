@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<output>
+    <display animation="scroll">
+        <line>
+            <text>   MiscelaneosPOS</text>
+        </line>
+        <line>
+            <text> ¡¡¡Bienvenidos!!!</text>
+        </line>
+    </display>
+</output>

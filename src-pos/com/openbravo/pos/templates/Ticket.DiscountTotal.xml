@@ -1,0 +1,44 @@
+import com.openbravo.format.Formats;
+import com.openbravo.pos.ticket.TicketLineInfo;
+import com.openbravo.pos.ticket.TicketProductInfo;
+index = sales.getSelectedIndex();
+if (index >= 0) {
+    total = ticket.getTotal(); 
+    if (total > 0.0) {
+        discountrate = sales.getInputValue();        
+        if (discountrate > 0.0 && discountrate <= 100) {
+            discountrate = discountrate / 100.0;        
+            sdiscount = Formats.PERCENT.formatValue(discountrate);
+            taxes = ticket.getTaxLines();
+            for (int i = 0; i < taxes.length; i++) {
+                product = ticket.getLine(index);
+                String productName = product.getProductName();
+                if (productName != "Compra 1 Mayor de 1.20 metros." && productName != "Devolución 1 Menor de 1.20 metros.") {
+                    line = ticket.getLine(i);
+                    taxline = taxes[i];
+                    ticket.insertLine(ticket.getLinesCount(),
+                    new TicketLineInfo(
+                        "Descuentos.",
+                        "Desc " + sdiscount + " de " + Formats.CURRENCY.formatValue(total),
+                        taxline.getTaxInfo().getTaxCategoryID(),
+                        1.0,
+                        -taxline.getSubTotal() * discountrate,
+                        taxline.getTaxInfo()));
+                    sales.setSelectedIndex(ticket.getLinesCount() - 1);
+                }
+                else {
+                    java.awt.Toolkit.getDefaultToolkit().beep();        
+                }
+            }
+        }    
+        else {
+            java.awt.Toolkit.getDefaultToolkit().beep();        
+        }
+    }
+    else {
+    java.awt.Toolkit.getDefaultToolkit().beep();
+    }
+    }
+    else {
+    java.awt.Toolkit.getDefaultToolkit().beep();
+}

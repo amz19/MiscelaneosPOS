@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT output (ticket | display | opendrawer | play | )*>
+
+<!ELEMENT ticket (line | image | barcode | cut)*>
+<!ATTLIST ticket printer CDATA "0">
+
+<!ELEMENT line (text)*>
+<!ATTLIST line size (0 | 1 | 2 | 3) "0">
+
+<!ELEMENT text (#PCDATA)>
+<!ATTLIST text align (left | right | center) "left">
+<!ATTLIST text length CDATA #IMPLIED>
+<!ATTLIST text bold (true | false) "false">
+<!ATTLIST text underline (true | false) "false">
+
+<!ELEMENT image (#PCDATA)>
+
+<!ELEMENT barcode (#PCDATA)>
+<!ATTLIST barcode type (EAN13 | CODE128) "EAN13">
+
+<!ELEMENT display (line)*>
+<!ATTLIST display animation (scroll | flyer | blink | curtain | none) "none">
+
+<!ELEMENT play (#PCDATA)>
+
+<!ELEMENT opendrawer EMPTY>
+<!ATTLIST opendrawer printer CDATA "0">

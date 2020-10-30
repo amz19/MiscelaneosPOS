@@ -1,0 +1,32 @@
+import com.openbravo.format.Formats;
+import com.openbravo.pos.forms.DataLogicSales;
+import com.openbravo.pos.forms.DataLogicSystem;
+import com.openbravo.data.loader.Session;
+import java.util.Properties;
+import com.openbravo.pos.ticket.ProductInfoExt;
+
+Session session = new Session(dbURL, dbUser, dbPassword);
+DataLogicSales logicsale = new DataLogicSales();
+logicsale.init(session);
+DataLogicSystem logicsystem = new DataLogicSystem();
+logicsystem.init(session);
+Properties p = logicsystem.getResourceAsProperties(hostname + "/properties");
+String loc = p.getProperty("location");
+
+product = line.getProductID();
+units = logicsale.findProductStock(loc,product,null);
+multiply = 0;
+nombreproducto = logicsale.getProductInfo(product);
+for (int i= 0; i < ticket.getLinesCount(); i++) {
+    row = ticket.getLine(i);
+    if (row.getProductID() == product) {
+       multiply = multiply + row.getMultiply();
+    }
+}
+diff = units - line.getMultiply() - multiply;
+if (diff < 0.0) {
+    javax.swing.JOptionPane.showMessageDialog(null, "No hay suficiente existencia del producto >>>---" + nombreproducto.getName() + "--->>> para realizar la venta; se cuenta con solo " + Formats.INT.formatValue(units) + " productos.", "Mensaje de MiscelaneosPOS.", JOptionPane.WARNING_MESSAGE);
+    return "Cancel";
+} else {
+    return null;
+}
